@@ -19,12 +19,19 @@ def books(hundredLinkList):
     final_text.append("https://www.gutenberg.org"+hrefs)
     
     
-    print (final_text)
-    return final_text
+  print (final_text)
+  return final_text
 
+
+def writeURLtoTxt(listOfUrls):
+  with open("url.txt", 'w') as f:
+    for i in listOfUrls:
+      f.write(i)
+      f.write("\n")
 
 # need to clean up the code
 if __name__ == '__main__':
+
     url = 'https://www.gutenberg.org/browse/scores/top'
     response = requests.get(url)
     page_content = BeautifulSoup(response.text, 'html.parser')
@@ -45,7 +52,7 @@ if __name__ == '__main__':
 
     count = 0
     for link in filtered_needed_links:
-        if (count > 0 and count <= 1):
+        if (count > 0 and count <= 10):
             final_url = needed_url + link
             final_urls.append(final_url)
         count = count + 1
@@ -75,6 +82,7 @@ if __name__ == '__main__':
         for link in temp_filtered_href_links:
             temp_final_url = needed_url + link
             # print(temp_final_url)
-    # print(len(final_urls))
+    print("final urls number: ", len(final_urls))
 
-    books(final_urls)
+    b = books(final_urls)
+    writeURLtoTxt(b)
